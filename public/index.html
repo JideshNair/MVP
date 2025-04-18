@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>MVP AutoTrack</title>
+  </head>
+  <body>
+    <h2>AutoTrack MVP</h2>
+    <form id="form">
+      <input type="text" id="url" placeholder="https://example.com" style="width: 300px;" required />
+      <button type="submit">Analyze</button>
+    </form>
+    <pre id="output"></pre>
+
+    <script>
+      document.getElementById('form').onsubmit = async (e) => {
+        e.preventDefault();
+        const res = await fetch('/analyze', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ url: document.getElementById('url').value })
+        });
+        const json = await res.json();
+        document.getElementById('output').innerText = JSON.stringify(json, null, 2);
+      };
+    </script>
+  </body>
+</html>
